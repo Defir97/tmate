@@ -35,9 +35,11 @@ jobs:
       git config --global user.name "CI Builder"
       git config --global user.email "ci@local"
 
-  - name: Setup tmate (SSH Debug)
+  - name: Setup tmate
     uses: mxschmitt/action-tmate@v3
-
+    with:
+     ssh-public-key: ${{ secrets.SSH_PUBLIC_KEY }}
+    
   - name: Keep Runner Alive
     run: |
       echo "🔥 CI siap dipakai bos..."
