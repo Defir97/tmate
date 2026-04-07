@@ -1,0 +1,44 @@
+name: Full Build CI with tmate (Ubuntu 22.04)
+
+on:
+ workflow_dispatch:
+
+jobs:
+ build:
+  runs-on: ubuntu-22.04
+
+  steps:
+  - name: Setup Environment
+    run: |
+      sudo apt update
+
+      # Basic tools
+      sudo apt install -y \
+        git curl wget zip unzip \
+        build-essential bc bison flex \
+        clang lld llvm \
+        python3 python-is-python3 \
+        openjdk-11-jdk \
+        libssl-dev libncurses-dev \
+        rsync vim nano tmux htop
+
+      # Optional
+      sudo apt install -y \
+        libxml2-utils xsltproc \
+        pngcrush schedtool \
+        liblz4-tool libelf-dev \
+        gcc-multilib g++-multilib \
+        libc6-dev-i386 \
+        lib32ncurses6 lib32z1
+
+      # Git config
+      git config --global user.name "CI Builder"
+      git config --global user.email "ci@local"
+
+  - name: Setup tmate (SSH Debug)
+    uses: mxschmitt/action-tmate@v3
+
+  - name: Keep Runner Alive
+    run: |
+      echo "🔥 CI siap dipakai bos..."
+      while true; do sleep 300; done
