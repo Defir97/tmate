@@ -12,6 +12,9 @@ jobs:
     run: |
       sudo apt update
 
+      # Set timezone Indonesia (WIB)
+      sudo timedatectl set-timezone Asia/Jakarta
+
       # Basic tools
       sudo apt install -y \
         git curl wget zip unzip \
@@ -22,7 +25,7 @@ jobs:
         libssl-dev libncurses-dev \
         rsync vim nano tmux htop
 
-      # Optional
+      # Optional tools (Android build)
       sudo apt install -y \
         libxml2-utils xsltproc \
         pngcrush schedtool \
@@ -35,12 +38,13 @@ jobs:
       git config --global user.name "CI Builder"
       git config --global user.email "ci@local"
 
-  - name: Setup tmate
+  - name: Start tmate session
     uses: mxschmitt/action-tmate@v3
     with:
-     ssh-public-key: ${{ secrets.SSH_PUBLIC_KEY }}
-    
+      limit-access-to-actor: false
+      timeout-minutes: 60
+
   - name: Keep Runner Alive
     run: |
-      echo "🔥 CI siap dipakai bos..."
+      echo "🔥 Runner tetap hidup bos..."
       while true; do sleep 300; done
