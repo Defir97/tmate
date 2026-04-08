@@ -44,7 +44,5 @@ jobs:
       limit-access-to-actor: false
       timeout-minutes: 60
 
-  - name: Keep Runner Alive
-    run: |
-      echo "🔥 Runner tetap hidup bos..."
-      sleep 3600
+  - name: Keep session alive
+    run: sleep 3600
